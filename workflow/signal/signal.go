@@ -11,7 +11,7 @@ import (
 )
 
 func SignalContainer(restConfig *rest.Config, namespace string, pod string, container string, s syscall.Signal) error {
-	return ExecPodContainerAndGetOutput(restConfig, namespace, pod, container, "/bin/sh", "-c", fmt.Sprintf("kill -s%d -- -1", s))
+	return ExecPodContainerAndGetOutput(restConfig, namespace, pod, container, "/bin/sh", "-c", fmt.Sprintf("kill -%d 1", s))
 }
 
 func ExecPodContainerAndGetOutput(restConfig *rest.Config, namespace string, pod string, container string, command ...string) error {
@@ -20,6 +20,13 @@ func ExecPodContainerAndGetOutput(restConfig *rest.Config, namespace string, pod
 		return err
 	}
 	stdout, stderr, err := common.GetExecutorOutput(x)
-	log.WithFields(log.Fields{"stdout": stdout, "stderr": stderr}).WithError(err).Debug()
+	log.
+		WithField("namespace", namespace).
+		WithField("pod", pod).
+		WithField("container", container).
+		WithField("stdout", stdout).
+		WithField("stderr", stderr).
+		WithError(err).
+		Info("signaled container")
 	return err
 }
