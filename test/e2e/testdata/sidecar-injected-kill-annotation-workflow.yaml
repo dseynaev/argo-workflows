@@ -6,7 +6,7 @@ spec:
   entrypoint: main
   podMetadata:
     annotations:
-      workflows.argoproj.io/kill-cmd-sidecar: '["sh", "-c", "kill -%d -- -1"]'
+      workflows.argoproj.io/kill-cmd-sidecar: '["sh", "-c", "kill -s%d -- -1"]'
   podSpecPatch: |
     terminationGracePeriodSeconds: 3
     containers:

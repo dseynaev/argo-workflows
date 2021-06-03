@@ -53,6 +53,5 @@ You can override the kill command by using a pod annotation, for example:
 spec:
   podMetadata:
     annotations:
-      workflows.argoproj.io/kill-cmd-main: '["sh", "-c", "kill -%d -- -1]'
-      workflows.argoproj.io/kill-cmd-vault-agent: '["sh", "-c", "kill -%d 1]'
+      workflows.argoproj.io/kill-cmd-vault-agent: '["sh", "-c", "kill -%d 1"]'
 ```
